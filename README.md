@@ -6,7 +6,7 @@ Repositorio que almacena toda la información y explicación de la solución bri
 
 Para este caso, lo que se plantea es que se tienen multiples fuentes de datos, como se puede ver en el diagrama.
 
-![Diagrama del proceso](<Ejercicio-1 y 2/diagrama_proceso.svg>)
+![Diagrama del proceso](<Ejercicio-1 y 2/diagrama_pt_tuya.png>)
 
 Mediante herramientas de procesado de datos, Databricks como se propone en este caso, permitiría la creación de notebooks de tipo jupiter en los que, mediante Python, SQL o R, pueden realizarse la consulta y consolidación de la información. Para posteriomente dejarla disponible en un repositorio, en este caso un data lake; para que los usuarios puedan consultarla los datos desde allí. Ya sea, mediante la creación de un informe, creado con herramientas como power bi, o que tomen los datos directamente desde el datalake.
 

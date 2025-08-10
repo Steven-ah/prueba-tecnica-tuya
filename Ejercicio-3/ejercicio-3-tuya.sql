@@ -3,8 +3,8 @@ WITH fechas_corte AS(
 -- Inicialmente tomar las fechas de inicio y fin en que el cliente estuvo
 	SELECT 
 		identificacion, 
-		date_trunc('month', MIN(corte_mes))::date AS min_corte_mes, 
-		date_trunc('month', MAX(corte_mes))::date AS max_corte_mes
+		MIN(corte_mes) AS min_corte_mes, 
+		MAX(corte_mes) AS max_corte_mes
 	FROM rch.historia
 	GROUP BY identificacion
 ), intervalo_fechas AS(
@@ -29,7 +29,7 @@ WITH fechas_corte AS(
 			ELSE 'N0'
 		END AS "nivel"
 	FROM intervalo_fechas AS p
-	LEFT JOIN rch.historia AS h ON p.identificacion = h.identificacion AND p.fecha =  date_trunc('month', corte_mes)::date
+	LEFT JOIN rch.historia AS h ON p.identificacion = h.identificacion AND p.fecha = corte_mes
 	LEFT JOIN rch.retiros AS r ON p.identificacion = r.identificacion
 ), racha AS(
 	-- Agregar un indicador de las rachas
@@ -71,6 +71,3 @@ WITH fechas_corte AS(
 		rm.racha
 	FROM resumir_rachas AS rr
 	INNER JOIN rachas_maximas AS rm ON rr.identificacion = rm.identificacion AND rr.nivel = rm.nivel AND rr.n_racha = rm.racha
-
-
-SELECT * FROM rch.rachas_cliente WHERE fecha_fin <= '2024-12-01' AND racha >= 5

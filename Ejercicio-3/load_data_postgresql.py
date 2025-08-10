@@ -44,7 +44,7 @@ for sheet in sheets:
 
 # Se genera una tabla de fechas para poder identificar cuando un cliente ha omitido un periodo.
 # Se toman solo el rango en base a la fecha máxima y mínima de los datos brindados
-date_range = pd.date_range("2023-01-01", "2024-12-01", freq="MS")
+date_range = pd.date_range("2023-01-31", "2024-12-31", freq="ME")
 dates_df = pd.DataFrame(date_range, columns=["date"])
 dates_df = dates_df.rename(columns={
     "date": "fecha"

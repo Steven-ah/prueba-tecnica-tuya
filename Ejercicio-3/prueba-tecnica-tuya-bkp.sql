@@ -119,8 +119,8 @@ ALTER TABLE rch.retiros OWNER TO postgres;
 CREATE VIEW rch.rachas_cliente AS
  WITH fechas_corte AS (
          SELECT historia.identificacion,
-            (date_trunc('month'::text, (min(historia.corte_mes))::timestamp with time zone))::date AS min_corte_mes,
-            (date_trunc('month'::text, (max(historia.corte_mes))::timestamp with time zone))::date AS max_corte_mes
+            min(historia.corte_mes) AS min_corte_mes,
+            max(historia.corte_mes) AS max_corte_mes
            FROM rch.historia
           GROUP BY historia.identificacion
         ), intervalo_fechas AS (
@@ -145,7 +145,7 @@ CREATE VIEW rch.rachas_cliente AS
                     ELSE 'N0'::text
                 END AS nivel
            FROM ((intervalo_fechas p
-             LEFT JOIN rch.historia h ON ((((p.identificacion)::text = (h.identificacion)::text) AND (p.fecha = (date_trunc('month'::text, (h.corte_mes)::timestamp with time zone))::date))))
+             LEFT JOIN rch.historia h ON ((((p.identificacion)::text = (h.identificacion)::text) AND (p.fecha = h.corte_mes))))
              LEFT JOIN rch.retiros r ON (((p.identificacion)::text = (r.identificacion)::text)))
         ), racha AS (
          SELECT c.identificacion,
@@ -238,30 +238,30 @@ ALTER TABLE ONLY rch.retiros ALTER COLUMN id SET DEFAULT nextval('rch.retiros_id
 --
 
 COPY rch.fechas (id, fecha) FROM stdin;
-1	2023-01-01
-2	2023-02-01
-3	2023-03-01
-4	2023-04-01
-5	2023-05-01
-6	2023-06-01
-7	2023-07-01
-8	2023-08-01
-9	2023-09-01
-10	2023-10-01
-11	2023-11-01
-12	2023-12-01
-13	2024-01-01
-14	2024-02-01
-15	2024-03-01
-16	2024-04-01
-17	2024-05-01
-18	2024-06-01
-19	2024-07-01
-20	2024-08-01
-21	2024-09-01
-22	2024-10-01
-23	2024-11-01
-24	2024-12-01
+1	2023-01-31
+2	2023-02-28
+3	2023-03-31
+4	2023-04-30
+5	2023-05-31
+6	2023-06-30
+7	2023-07-31
+8	2023-08-31
+9	2023-09-30
+10	2023-10-31
+11	2023-11-30
+12	2023-12-31
+13	2024-01-31
+14	2024-02-29
+15	2024-03-31
+16	2024-04-30
+17	2024-05-31
+18	2024-06-30
+19	2024-07-31
+20	2024-08-31
+21	2024-09-30
+22	2024-10-31
+23	2024-11-30
+24	2024-12-31
 \.
 
 
